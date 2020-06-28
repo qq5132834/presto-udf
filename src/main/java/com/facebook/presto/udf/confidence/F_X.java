@@ -5,6 +5,7 @@ import com.facebook.presto.spi.function.ScalarFunction;
 import com.facebook.presto.spi.function.SqlType;
 import com.facebook.presto.spi.type.StandardTypes;
 import com.facebook.presto.udf.utils.ConfidenceQueryCredibilityRequest;
+import com.facebook.presto.udf.utils.StringUtils;
 import com.facebook.presto.udf.utils.UdfHttpClient;
 import io.airlift.slice.Slice;
 import io.airlift.slice.Slices;
@@ -36,25 +37,30 @@ public class F_X
 
         int f = 10000;
 
-        String[] columnArray = columnNames.toStringUtf8().split(",");
-        if(columnArray != null && columnArray.length > 0){
-            Set<String> set = new HashSet<>(Arrays.asList(columnArray));
-            if(set != null && set.size() > 0){
+        if(!StringUtils.isBlank(columnNames.toStringUtf8())){
 
-                for(String col : set){
+            String[] columnArray = columnNames.toStringUtf8().split(",");
+            String[] datasourceIdArray = dsId.toStringUtf8().split(".");
 
-                    UdfHttpClient udfHttpClient = new UdfHttpClient();
+            if(columnArray != null && columnArray.length > 0){
+                Set<String> set = new HashSet<>(Arrays.asList(columnArray));
+                if(set != null && set.size() > 0){
 
-                    ConfidenceQueryCredibilityRequest request = new ConfidenceQueryCredibilityRequest();
-                    request.setDimensionId(dimensionId.toStringUtf8());
-                    request.setDsId(dsId.toStringUtf8());
-                    request.setTableName(tableName.toStringUtf8());
-                    request.setRowId(rowId.toStringUtf8());
-                    request.setColumnName(col);
+                    for(String col : set){
 
-                    int f_col = udfHttpClient.post(request);
-                    if(f_col < f){
-                        f = f_col;
+                        UdfHttpClient udfHttpClient = new UdfHttpClient();
+
+                        ConfidenceQueryCredibilityRequest request = new ConfidenceQueryCredibilityRequest();
+                        request.setDimensionId(dimensionId.toStringUtf8());
+                        request.setDsId(datasourceIdArray[0]);
+                        request.setTableName(datasourceIdArray[1]);
+                        request.setRowId(rowId.toStringUtf8());
+                        request.setColumnName(col);
+
+                        int f_col = udfHttpClient.post(request);
+                        if(f_col < f){
+                            f = f_col;
+                        }
                     }
                 }
             }

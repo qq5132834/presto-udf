@@ -30,10 +30,13 @@ public class F_COL {
 
         UdfHttpClient udfHttpClient = new UdfHttpClient();
 
+
+        String[] datasourceIdArray = dsId.toStringUtf8().split(".");
+
         ConfidenceQueryCredibilityRequest request = new ConfidenceQueryCredibilityRequest();
         request.setDimensionId(dimensionId.toStringUtf8());
-        request.setDsId(dsId.toStringUtf8());
-        request.setTableName(tableName.toStringUtf8());
+        request.setDsId(datasourceIdArray[0]);
+        request.setTableName(datasourceIdArray[1]);
         request.setRowId(rowId.toStringUtf8());
         request.setColumnName(columnNames.toStringUtf8());
 

@@ -41,6 +41,8 @@ public class F_EXPR {
         if(!StringUtils.isBlank(columnNames.toStringUtf8())){
 
             String[] columnArray = columnNames.toStringUtf8().split(",");
+            String[] datasourceIdArray = dsId.toStringUtf8().split(".");
+
             if(columnArray != null && columnArray.length > 0){
                 Set<String> set = new HashSet<>(Arrays.asList(columnArray));
                 if(set != null && set.size() > 0){
@@ -51,8 +53,8 @@ public class F_EXPR {
 
                         ConfidenceQueryCredibilityRequest request = new ConfidenceQueryCredibilityRequest();
                         request.setDimensionId(dimensionId.toStringUtf8());
-                        request.setDsId(dsId.toStringUtf8());
-                        request.setTableName(tableName.toStringUtf8());
+                        request.setDsId(datasourceIdArray[0]);
+                        request.setTableName(datasourceIdArray[1]);
                         request.setRowId(rowId.toStringUtf8());
                         request.setColumnName(col);
 

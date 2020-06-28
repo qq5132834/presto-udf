@@ -41,7 +41,7 @@ public class F_EXPR {
         if(!StringUtils.isBlank(columnNames.toStringUtf8())){
 
             String[] columnArray = columnNames.toStringUtf8().split(",");
-            String[] datasourceIdArray = dsId.toStringUtf8().split(".");
+            String[] datasourceIdArray = dsId.toStringUtf8().split("\\.");
 
             if(columnArray != null && columnArray.length > 0){
                 Set<String> set = new HashSet<>(Arrays.asList(columnArray));

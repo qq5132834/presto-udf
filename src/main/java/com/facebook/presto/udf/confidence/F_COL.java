@@ -31,7 +31,7 @@ public class F_COL {
         UdfHttpClient udfHttpClient = new UdfHttpClient();
 
 
-        String[] datasourceIdArray = dsId.toStringUtf8().split(".");
+        String[] datasourceIdArray = dsId.toStringUtf8().split("\\.");
 
         ConfidenceQueryCredibilityRequest request = new ConfidenceQueryCredibilityRequest();
         request.setDimensionId(dimensionId.toStringUtf8());
